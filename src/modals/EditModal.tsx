@@ -3,7 +3,6 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 
 const EditModal = ({ values, open, handleClose, handleSubmit }: any) => {
-    console.log("open--->", open);
     
   return (
     <Modal open={open} onClose={handleClose}>

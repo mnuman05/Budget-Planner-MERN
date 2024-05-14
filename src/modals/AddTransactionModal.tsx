@@ -29,7 +29,6 @@ const AddTransactionModal = ({ open, handleClose, handleSubmit }: any) => {
     fetchAccountList();
   }, []);
 
-  console.log("check me", bankAccounts);
 
   console.log("selectedType=>", type);
 
@@ -52,7 +51,7 @@ const AddTransactionModal = ({ open, handleClose, handleSubmit }: any) => {
           initialValues={{
             description: "",
             amount: "",
-            transactionType: type,
+            type,
             from: "",
             to: "",
           }}
@@ -62,16 +61,41 @@ const AddTransactionModal = ({ open, handleClose, handleSubmit }: any) => {
               .required("Required")
               .min(0, "Amount cannot be negative")
               .moreThan(0, "Amount must be greater than zero"),
-            transactionType: Yup.number().required("Required"),
+            type: Yup.number().required("Required"),
             from: Yup.string().required("Required"),
-            to: Yup.string().when("transactionType", {
-              is: type === 2 ? 2 : 1,
-              then: Yup.string().notRequired(),
-              otherwise: Yup.string().required("Required"),
-            }),
+            // to: Yup.string().when("type", {
+            //   // is: type === 2 ? 2 : type === 3 ? 3 : 1,
+            //   is: type === 1 ? 1 : 2, 
+
+            //   then: Yup.string().notRequired(),
+            //   otherwise: Yup.string().required("Required"),
+            // }),
+            // to: Yup.string().when("type", {
+            //   is: (value:number) => {
+            //     // value === 1
+            //     console.log("valueos", value);
+
+            //   }, // Concise conditional check
+            //   then: Yup.string().required("Required for Send transactions"),
+            //   otherwise: Yup.string().notRequired(),
+            // }),
+            // to: Yup.string().when("type", {
+            //   is: (value: number) => value !== 1, // Concise conditional check for non-Send transactions
+            //   then: Yup.string().notRequired(),
+            //   otherwise: Yup.string().required(
+            //     "Required for Send transactions"
+            //   ),
+            // }),
+            // to: Yup.string().when("type", {
+            //   is: type !== 1, // Require if type is not 1
+            //   then: Yup.string().notRequired(),
+            //   otherwise: Yup.string().required(
+            //     "Required for Send transactions"
+            //   ),
+            // }),
           })}
           onSubmit={(values) => {
-            console.log("Form values:", values);
+            console.log("Form values:", values, type);
             console.log("selectedTypew:", type);
             handleSubmit(values, type);
           }}
@@ -115,7 +139,7 @@ const AddTransactionModal = ({ open, handleClose, handleSubmit }: any) => {
                   <Field
                     as={Select}
                     fullWidth
-                    name="transactionType"
+                    name="type"
                     value={type}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       console.log("eddd", e);
@@ -124,11 +148,9 @@ const AddTransactionModal = ({ open, handleClose, handleSubmit }: any) => {
                       setFieldValue("from", "");
                       setFieldValue("to", "");
                     }}
-                    error={errors.transactionType && touched.transactionType}
+                    error={errors.type && touched.type}
                     helperText={
-                      errors.transactionType && touched.transactionType
-                        ? errors.transactionType
-                        : null
+                      errors.type && touched.type ? errors.type : null
                     }
                   >
                     <MenuItem value={1}>Send</MenuItem>
@@ -136,81 +158,42 @@ const AddTransactionModal = ({ open, handleClose, handleSubmit }: any) => {
                     <MenuItem value={3}>Deposit</MenuItem>
                   </Field>
                 </Box>
+                <Box sx={{ mb: 2 }}>
+                  <Field
+                    as={Select}
+                    fullWidth
+                    name="from"
+                    placeholder="From"
+                    error={errors.from && touched.from}
+                    helperText={
+                      errors.from && touched.from ? errors.from : null
+                    }
+                  >
+                    {bankAccounts.length === 0 && (
+                      <MenuItem disabled value="">
+                        No accounts found! Please Add
+                      </MenuItem>
+                    )}
+                    {bankAccounts.map((account: any) => (
+                      <MenuItem key={account.id} value={account.accountNumber}>
+                        {account.title}
+                      </MenuItem>
+                    ))}
+                  </Field>
+                </Box>
 
-                {type === 1 && (
-                  <>
-                    <Box sx={{ mb: 2 }}>
-                      <Field
-                        as={Select}
-                        fullWidth
-                        name="from"
-                        placeholder="From"
-                        error={errors.from && touched.from}
-                        helperText={
-                          errors.from && touched.from ? errors.from : null
-                        }
-                      >
-                        {bankAccounts.length === 0 && (
-                          <MenuItem disabled value="">
-                            No accounts found! Please Add
-                          </MenuItem>
-                        )}
-                        {bankAccounts.map((account: any) => (
-                          <MenuItem
-                            key={account.id}
-                            value={account.accountNumber}
-                          >
-                            {account.title}
-                          </MenuItem>
-                        ))}
-                      </Field>
-                    </Box>
-
-                    <Box sx={{ mb: 2 }}>
-                      <Field
-                        as={TextField}
-                        fullWidth
-                        name="to"
-                        label="To"
-                        error={errors.to && touched.to}
-                        helperText={errors.to && touched.to ? errors.to : null}
-                      />
-                    </Box>
-                  </>
-                )}
-
-                {type === 2 && (
-                  <>
-                    <Box sx={{ mb: 2 }}>
-                      <Field
-                        as={Select}
-                        fullWidth
-                        name="from"
-                        // label="From"
-                        placeholder="From"
-                        // displayEmpty
-                        error={errors.from && touched.from}
-                        helperText={
-                          errors.from && touched.from ? errors.from : null
-                        }
-                      >
-                        {bankAccounts.length === 0 && (
-                          <MenuItem disabled value="">
-                            No accounts found! Please Add
-                          </MenuItem>
-                        )}
-                        {bankAccounts.map((account: any) => (
-                          <MenuItem
-                            key={account.id}
-                            value={account.accountNumber}
-                          >
-                            {account.title}
-                          </MenuItem>
-                        ))}
-                      </Field>
-                    </Box>
-                  </>
-                )}
+                {type === 1 ? (
+                  <Box sx={{ mb: 2 }}>
+                    <Field
+                      as={TextField}
+                      fullWidth
+                      name="to"
+                      label="To"
+                      error={errors.to && touched.to}
+                      helperText={errors.to && touched.to ? errors.to : null}
+                    />
+                  </Box>
+                ) : null}
 
                 <Button type="submit" variant="contained" color="primary">
                   Submit

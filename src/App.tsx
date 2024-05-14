@@ -9,10 +9,9 @@ import { ukoTheme } from "./theme";
 const App: FC = () => {
   const allPages = useRoutes(routes);
 
-  // App theme
   const appTheme = ukoTheme();
 
-  // toaster options
+
   const toasterOptions = {
     style: {
       fontWeight: 500,

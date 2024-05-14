@@ -3,22 +3,16 @@ import {
   Box,
   Button,
   Card,
-  Checkbox,
-  Divider,
-  FormControlLabel,
   FormHelperText,
 } from "@mui/material";
 import {
-  SocialIconButton,
   TextFieldWrapper,
 } from "components/authentication/StyledComponents";
 import FlexBox from "components/FlexBox";
 import LightTextField from "components/LightTextField";
-import { H1, H3, Small } from "components/Typography";
+import { H1, Small } from "components/Typography";
 import { useFormik } from "formik";
 import useAuth from "hooks/useAuth";
-import FacebookIcon from "icons/FacebookIcon";
-import GoogleIcon from "icons/GoogleIcon";
 import { FC, useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
@@ -37,7 +31,7 @@ const Register: FC = () => {
     terms: true,
     submit: null,
   };
-  // form field value validation schema
+
   const validationSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
     email: Yup.string()
@@ -94,25 +88,7 @@ const Register: FC = () => {
         </FlexBox>
 
         <FlexBox justifyContent="space-between" flexWrap="wrap" my="1rem">
-          {/* <SocialIconButton
-            // onClick={loginWithGoogle}
-            startIcon={<GoogleIcon sx={{ mr: "0.5rem" }} />}
-          >
-            Sign up with Google
-          </SocialIconButton>
-          <SocialIconButton
-            // onClick={loginWithFacebook}
-            startIcon={<FacebookIcon sx={{ mr: "0.5rem" }} />}
-          >
-            Sign up with Facebook
-          </SocialIconButton> */}
-
-          {/* <Divider sx={{ my: 3, width: "100%", alignItems: "flex-start" }}>
-            <H3 color="text.disabled" px={1}>
-              Or
-            </H3>
-          </Divider> */}
-
+        
           <form noValidate onSubmit={handleSubmit} style={{ width: "100%" }}>
             <FlexBox justifyContent="space-between" flexWrap="wrap">
               <TextFieldWrapper>
@@ -157,22 +133,6 @@ const Register: FC = () => {
                 helperText={touched.password && errors.password}
               />
             </TextFieldWrapper>
-
-            {/* <FormControlLabel
-              control={
-                <Checkbox
-                  disableRipple
-                  checked={values.terms}
-                  onChange={handleChange}
-                  name="terms"
-                />
-              }
-              label="I agree to terms & conditions"
-              sx={{
-                marginTop: "0.5rem",
-                "& .MuiTypography-root": { fontWeight: 600 },
-              }}
-            /> */}
 
             {error && (
               <FormHelperText

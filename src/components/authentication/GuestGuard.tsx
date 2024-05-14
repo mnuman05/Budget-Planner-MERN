@@ -3,7 +3,6 @@ import React, { Fragment, ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 
 
-// component props interface
 interface GuestGuardProps {
   children: ReactNode;
 }

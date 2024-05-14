@@ -1,7 +1,5 @@
 import { Modal, Box, TextField, Button } from "@mui/material";
-import { client } from "client";
 import { Formik, Form, Field } from "formik";
-import { useEffect, useState } from "react";
 import * as Yup from "yup";
 
 const AddAccountModal = ({ open, handleClose, handleSubmit }:any) => {

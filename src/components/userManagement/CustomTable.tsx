@@ -102,9 +102,6 @@ const CustomTable: FC<CustomTableProps> = (props) => {
     gotoPage(currentPageNo - 1);
   };
 
-  console.log({loading, data});
-  
-
   // table border color
   const borderColor =
     theme.palette.mode === "light" ? "text.secondary" : "divider";

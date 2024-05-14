@@ -4,9 +4,6 @@ import * as Yup from "yup";
 
 const EditTransactionModal = ({ values, open, handleClose, handleSubmit }: any) => {
 
-  console.log("transactionedited=>", values);
-  
-    
   return (
     <Modal open={open} onClose={handleClose}>
       <Box

@@ -5,7 +5,6 @@ export const TitleContext = createContext({
   setTitle: (arg: string) => {},
 });
 
-// props types for provider
 type ProviderProps = {
   children: ReactNode;
 };

@@ -20,8 +20,6 @@ const LoadingScreen = () => {
 
   return (
     <>
-      {/* <Box sx={{ backgroundColor: "background.paper", minHeight: "100%" }} /> */}
-
       <Box
         sx={{
           display: "flex",

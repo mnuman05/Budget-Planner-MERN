@@ -12,7 +12,6 @@ const Loadable = (Component: LazyExoticComponent<FC>) => (props: any) =>
     </Suspense>
   );
 
-// authentication pages
 const Login = Loadable(lazy(() => import("./pages/authentication/Login")));
 const Register = Loadable(
   lazy(() => import("./pages/authentication/Register"))
@@ -21,15 +20,12 @@ const ForgetPassword = Loadable(
   lazy(() => import("./pages/authentication/ForgetPassword"))
 );
 
-// Dashboard pages
 const DashboardSaaS = Loadable(lazy(() => import("./pages/dashboards/SaaS")));
 
-// user profile
 const UserProfile = Loadable(lazy(() => import("./pages/UserProfile")));
 
-// user management
-const UserList = Loadable(
-  lazy(() => import("./pages/userManagement/UserList"))
+const BankList = Loadable(
+  lazy(() => import("./pages/userManagement/BankList"))
 );
 const UserGrid = Loadable(
   lazy(() => import("./pages/userManagement/UserGrid"))
@@ -38,10 +34,8 @@ const TransactionList = Loadable(
   lazy(() => import("./pages/userManagement/TransactionList"))
 );
 
-// error
 const Error = Loadable(lazy(() => import("./pages/404")));
 
-// routes
 const routes = [
   {
     path: "/",
@@ -90,7 +84,7 @@ const routes = [
 
       {
         path: "account-list",
-        element: <UserList />,
+        element: <BankList />,
       },
       {
         path: "user-grid",

@@ -4,22 +4,18 @@ import {
   List,
   ListItemButton,
   styled,
-  Theme,
   Tooltip,
-  useMediaQuery,
 } from "@mui/material";
 import { FC, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ScrollBar from "simplebar-react";
 import topMenuList from "./topMenuList";
 
-// root component interface
 interface SideNavBarProps {
   showMobileSideBar: boolean;
   closeMobileSideBar: () => void;
 }
 
-// custom styled components
 const MainMenu = styled(Box)(({ theme }) => ({
   left: 0,
   width: 80,
@@ -42,7 +38,6 @@ const StyledListItemButton = styled(ListItemButton)(() => ({
   "&:hover": { backgroundColor: "transparent" },
 }));
 
-// root component
 const DashboardSideBar: FC<SideNavBarProps> = ({
   showMobileSideBar,
   closeMobileSideBar,
@@ -50,7 +45,6 @@ const DashboardSideBar: FC<SideNavBarProps> = ({
   const navigate = useNavigate();
 
   const [active, setActive] = useState("Dashboard");
-  const downMd = useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
 
   const handleActiveMainMenu = (menuItem: any) => () => {
     setActive(menuItem.title);
@@ -59,7 +53,6 @@ const DashboardSideBar: FC<SideNavBarProps> = ({
     closeMobileSideBar();
   };
 
-  // main menus content
   const mainSideBarContent = (
     <List sx={{ height: "100%" }}>
       <StyledListItemButton disableRipple>
@@ -86,35 +79,56 @@ const DashboardSideBar: FC<SideNavBarProps> = ({
     </List>
   );
 
-  // for mobile device
-  if (downMd) {
-    return (
-      <Drawer
-        anchor="left"
-        open={showMobileSideBar}
-        onClose={closeMobileSideBar}
-        PaperProps={{ sx: { width: 80 } }}
-      >
-        <Box
-          sx={{
-            height: "100%",
-            display: "flex",
-            width: "inherit",
-            position: "fixed",
-            overflow: "hidden",
-            flexDirection: "column",
-            boxShadow: (theme) => theme.shadows[1],
-            backgroundColor: (theme) => theme.palette.background.paper,
-            "& .simplebar-track.simplebar-vertical": { width: 7 },
-            "& .simplebar-scrollbar:before": {
-              background: (theme) => theme.palette.text.primary,
-            },
-          }}
+  const drawerSideBarContent = (
+    <List sx={{ height: "100%" }}>
+      <StyledListItemButton disableRipple>
+        <img src="/static/logo/logo.svg" alt="UKO Logo" width={31} />
+      </StyledListItemButton>
+
+      <ScrollBar style={{ maxHeight: "calc(100% - 50px)" }}>
+        {topMenuList.map((nav, index) => (
+          <Tooltip title={nav.title} placement="right" key={index}>
+            <StyledListItemButton
+              disableRipple
+              onClick={handleActiveMainMenu(nav)}
+            >
+              <nav.Icon
+                sx={{
+                  color:
+                    active === nav.title ? "primary.main" : "secondary.400",
+                }}
+              />
+              <div className="" style={{ marginLeft: '15px' }}>{nav.title}</div>
+            </StyledListItemButton>
+          </Tooltip>
+        ))}
+      </ScrollBar>
+    </List>
+  );
+
+
+  if (showMobileSideBar) {
+      return (
+        <Drawer
+          anchor="left"
+          open={showMobileSideBar}
+          onClose={closeMobileSideBar}
+          PaperProps={{ sx: { width: 150 } }}
         >
-          {mainSideBarContent}
-        </Box>
-      </Drawer>
-    );
+          <Box
+            sx={{
+              height: "100%",
+              display: "flex",
+              width: "inherit",
+              position: "fixed",
+              overflow: "hidden",
+              flexDirection: "column"
+            }}
+          >
+            {drawerSideBarContent}
+          </Box>
+        </Drawer>
+      );
   }
 
   return <MainMenu>{mainSideBarContent}</MainMenu>;

@@ -8,7 +8,7 @@ import "react-image-lightbox/style.css";
 import { BrowserRouter } from "react-router-dom";
 import "simplebar/dist/simplebar.min.css";
 import App from "./App";
-import "./__fakeApi__";
+// import "./__fakeApi__";
 
 ReactDOM.render(
   <StrictMode>

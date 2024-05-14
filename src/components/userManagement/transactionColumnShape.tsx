@@ -31,26 +31,37 @@ const TransactionListColumnShape = (
     minWidth: 150,
   },
   {
+    Header: "Transaction Type",
+    accessor: "transactionType",
+    minWidth: 150,
+    Cell: ({ value }: { value: number }) => {
+      // Function to map numerical type to string representation
+      const getTypeString = (type: number): string => {
+        switch (type) {
+          case 1:
+            return "Send";
+          case 2:
+            return "Withdrawal";
+          case 3:
+            return "Deposit";
+          default:
+            return "Unknown"; 
+        }
+      };
+
+      return getTypeString(value);
+    },
+  },
+  {
     Header: "Actions",
     accessor: "actions",
-    // Cell: ({ row }: any) =>{
-    //     console.log("rowww-<", row, loggedInUserId);
-    //     return (
-    //   <div>
-    //     <Edit onClick={() => handleEdit(row.original)} />
-    //     <Delete onClick={() => handleDelete(row.original)} />
-    //   </div>
-    //     )
-    //   },
 
     Cell: ({ row }: any) => {
-      // Check if the logged-in user ID matches the user ID associated with the transaction
       if (
-        loggedInUserId === row.original.userId &&
-        row.original.transactionType == 1
+        (loggedInUserId === row.original.userId &&
+          row.original.transactionType == 1) ||
+        row.original.transactionType == 3
       ) {
-        console.log("rowww-->", row);
-
         return (
           <div>
             <Edit onClick={() => handleEdit(row.original)} />
@@ -58,7 +69,7 @@ const TransactionListColumnShape = (
           </div>
         );
       } else {
-        return null; // Render nothing if the condition doesn't match
+        return null;
       }
     },
 

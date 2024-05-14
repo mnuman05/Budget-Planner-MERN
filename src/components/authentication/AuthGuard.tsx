@@ -3,7 +3,6 @@ import Login from "pages/authentication/Login";
 import { Fragment, ReactNode, useEffect, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 
-// component props interface
 interface AuthGuardProps {
   children: ReactNode;
 }

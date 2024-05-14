@@ -14,7 +14,6 @@ export const SettingsContext = createContext({
   saveSettings: (arg: themeSettingsProps) => {},
 });
 
-// component props type
 type settingsProviderProps = {
   children: ReactNode;
 };

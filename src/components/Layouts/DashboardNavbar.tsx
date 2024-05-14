@@ -9,17 +9,13 @@ import {
 import { H2 } from "components/Typography";
 import { TitleContext } from "contexts/TitleContext";
 import { FC, useContext } from "react";
-import LanguagePopover from "./popovers/LanguagePopover";
-import NotificationsPopover from "./popovers/NotificationsPopover";
 import ProfilePopover from "./popovers/ProfilePopover";
 import ServicePopover from "./popovers/ServicePopover";
 
-// root component interface
 interface DashboardNavBarProps {
   setShowMobileSideBar: () => void;
 }
 
-// custom styled components
 const DashboardNavbarRoot = styled(AppBar)(() => ({
   zIndex: 11,
   boxShadow: "none",
@@ -46,13 +42,12 @@ const ToggleIcon = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
 }));
 
-// root component
 const DashboardNavbar: FC<DashboardNavBarProps> = ({
   setShowMobileSideBar,
 }) => {
   const { title } = useContext(TitleContext);
-  const upSm = useMediaQuery((theme: Theme) => theme.breakpoints.up("sm"));
-  const downSm = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
+  const upSm = useMediaQuery((theme: Theme) => theme.breakpoints.up("xl"));
+  const downSm = useMediaQuery((theme: Theme) => theme.breakpoints.down("xl"));
 
   if (downSm) {
     return (
@@ -72,8 +67,6 @@ const DashboardNavbar: FC<DashboardNavBarProps> = ({
               alt="Logo"
             />
           </Box>
-
-          <LanguagePopover />
           <ProfilePopover />
         </StyledToolBar>
       </DashboardNavbarRoot>
@@ -103,8 +96,6 @@ const DashboardNavbar: FC<DashboardNavBarProps> = ({
 
         {upSm && (
           <>
-            {/* <LanguagePopover />
-            <NotificationsPopover /> */}
             <ServicePopover />
           </>
         )}
